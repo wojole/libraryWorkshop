@@ -3,9 +3,9 @@
 
 class Book
 {
-    private $id;
-    private $name;
-    private $author;
+    public $id;
+    public $name;
+    public $author;
 
     public function __construct()
     {
@@ -102,6 +102,25 @@ class Book
             return false;
         }
         return true;
+    }
+    static public function loadAllBooks(PDO $conn)
+    {
+        $sql = "SELECT * FROM books";
+        $ret = [];
+
+        $result = $conn->query($sql);
+        if ($result !== false && $result->rowCount() != 0) {
+            foreach ($result as $row) {
+                $loadedBook = new Book();
+                $loadedBook->id = $row['id'];
+                $loadedBook->name = $row['name'];
+                $loadedBook->author = $row['author'];
+
+
+                $ret[] = $loadedBook;
+            }
+        }
+        return $ret; //metoda zwraca tablicę z obiektami
     }
 
 }
