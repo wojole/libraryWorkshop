@@ -72,9 +72,10 @@ class Book
             return true;
         } else echo "Błąd dodawania nowej książki!";
     }
+
     public function update(PDO $conn, $name, $author)
     {
-        if($this->id != -1){
+        if ($this->id != -1) {
             $stmt = $conn->prepare(
                 'UPDATE books SET name=:name, author=:author WHERE id=:id'
             );
@@ -85,9 +86,10 @@ class Book
             );
             if ($result === true) {
                 return true;
-            }else "Nieudana aktualizacja danych w bazie";
+            } else "Nieudana aktualizacja danych w bazie";
         }
     }
+
     public function delete(PDO $conn)
     {
         if ($this->id != -1) {
@@ -103,6 +105,7 @@ class Book
         }
         return true;
     }
+
     static public function loadAllBooks(PDO $conn)
     {
         $sql = "SELECT * FROM books";
