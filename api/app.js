@@ -1,6 +1,20 @@
 $(function () {
+    // this is the id of the form
+    $("#addBook").submit(function (e) {
+        if ($('#name').val() !== '' && $('#author').val() !== '') { //check if felds are not empty
+            var url = window.location.href + '/api/books.php'; // the script where you handle the form input.
 
-    //Robimy zapytanie AJAX...
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#addBook").serialize(), // serializes the form's elements.
+                success: location.reload()
+
+            });
+        }
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    });
+    // Robimy zapytanie AJAX...
     $.ajax({
         //Do adresu:
         url: window.location.href + '/api/books.php', //znajduje scieżkę katalogu i plik
@@ -24,10 +38,10 @@ $(function () {
     });
 
     $('#books').on('click', '.book', function () {
-        var bookInfo=$(this).next(); //zapamiętuje diva do zmiennej bookInfo
+        var bookInfo = $(this).next(); //zapamiętuje diva do zmiennej bookInfo
         $.ajax({
             //Do adresu:
-            url: window.location.href + '/api/books.php?id='+$(this).data('id'),
+            url: window.location.href + '/api/books.php?id=' + $(this).data('id'),
             //I oczekujemy w zamian JSON-a
             dataType: 'json'
         }).done(function (response) {
@@ -39,9 +53,6 @@ $(function () {
         }).fail(function (error) {
             console.log('Error!', error);
         });
-
-
-
 
     });
 
