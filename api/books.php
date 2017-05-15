@@ -28,4 +28,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             return true;
         }
     }
+ }
+if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+
+    if (isset($_GET['id'])) {
+        $id = trim($_GET['id']);
+
+        $book1 = new Book();
+        $book1 = Book::loadFromDB($conn, $id);
+        $success = $book1->delete($conn);
+        if ($success === true) {
+
+            return true;
+        }
+    }
 }
