@@ -38,9 +38,9 @@ $(function () {
         console.log('Error!', error);
     });
 
-
+// fades div with book info(title)
     $('#books').on('click', 'span', function () {
-        var bookInfo = $(this).parent().next(); //zapamiętuje diva do zmiennej bookInfo
+        var bookInfo = $(this).parent().next(); //saves div to variable bookInfo
         $.ajax({
             //Do adresu:
             url: window.location.href + '/api/books.php?id=' + $(this).parent().data('id'),
@@ -48,7 +48,7 @@ $(function () {
         }).done(function (response) {
 
             var info = response;
-            bookInfo.text(info).fadeIn('slow'); //wywołuje zmienną i dodaje do niej tekst
+            bookInfo.text(info).fadeIn('slow'); //adding text to bookInfo div
 
 
         }).fail(function (error) {
@@ -57,8 +57,9 @@ $(function () {
 
     });
 
-    $('#books').on('click', 'a', function () { //poprawić selektor żeby nie wysyłało 2 ajaxów
-        var url = $(this).attr("href"); //zapisuje adres href do zmiennej url
+//deletes book from database
+    $('#books').on('click', 'a', function () {
+        var url = $(this).attr("href"); //saves href address to variable url
         $.ajax({
             type: "DELETE",
             url: url,
